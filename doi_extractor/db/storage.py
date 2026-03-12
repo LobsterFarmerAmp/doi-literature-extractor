@@ -148,6 +148,9 @@ async def store_papers(papers: List[Dict]) -> Dict:
                         except Exception:
                             pass
                     
+                    # 移除 Paper 模型中没有的字段
+                    paper_data.pop('source', None)
+                    
                     # PostgreSQL upsert
                     if engine.dialect.name == 'postgresql':
                         stmt = insert(Paper).values(**paper_data)
